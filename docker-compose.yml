@@ -28,10 +28,9 @@ services:
     env_file:
       - .env
     volumes:
-      - ./data/pgdata:/var/lib/postgresql/data
-      - ./data:/data
+      - pgdata:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5434:5432"
 
   redis:
     image: redis
@@ -53,3 +52,6 @@ services:
       options:
         max-size: "1M"
         max-file: "10"
+volumes:
+  pgdata:
+    external: true
