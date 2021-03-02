@@ -249,7 +249,7 @@ class Document(BaseModel):
 
     def __str__(self):
 
-        return f'#{self.id}'
+        return f'#{self.id,self.data_partner,self.document_type}'
 
 
 class DocumentFile(BaseModel):

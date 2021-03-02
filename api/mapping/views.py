@@ -24,7 +24,7 @@ from extra_views import ModelFormSetView
 
 from .forms import ScanReportForm, UserCreateForm, AddMappingRuleForm, \
     DocumentForm,DocumentFileForm
-from .models import ScanReport, ScanReportValue, ScanReportField, \
+from .models import STATUS_ARCHIVED, STATUS_LIVE, ScanReport, ScanReportValue, ScanReportField, \
     ScanReportTable, MappingRule, OmopTable, OmopField, DocumentFile, Document
 from .tasks import process_scan_report_task, import_data_dictionary_task
 
@@ -461,7 +461,7 @@ class DocumentFileListView(ListView):
     model = DocumentFile
 
     def get_queryset(self):
-         qs = super().get_queryset().order_by('status')
+         qs = super().get_queryset().order_by('created_at')
          search_term = self.kwargs.get('pk')
          if search_term is not None:
              qs = qs.filter(document__id=search_term)
@@ -499,7 +499,7 @@ class DocumentFileStatusUpdateView(UpdateView):
     fields = [
         'status'
     ]
-
+    
     def get_success_url(self, **kwargs):
 
      return reverse("file-list", kwargs={'pk': self.object.document_id})
